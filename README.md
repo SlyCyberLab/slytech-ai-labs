@@ -11,3 +11,4 @@ AI-assisted triage tool that analyzes security logs and maps findings to MITRE A
 - Stack: Python, Anthropic API
 - Blog post: coming soon
 - Status: In progress
+# AI-assisted security tools for the modern SOC
