@@ -38,10 +38,10 @@ SECURITY_EVENT_CODES = [
 ]
 
 # How far back to look
-TIME_WINDOW = "-1h"
+TIME_WINDOW = "-7d"
 
 # Max events to send to AI (keep cost and context manageable)
-MAX_EVENTS = 20
+MAX_EVENTS = 50
 
 # Output file
 OUTPUT_FILE = f"triage_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
@@ -59,12 +59,22 @@ def fetch_splunk_events():
     # Filter to only our target event codes
     event_code_filter = " OR ".join([f'EventCode="{code}"' for code in SECURITY_EVENT_CODES])
     search_query = f"""
-        search index=* earliest={TIME_WINDOW}
-        ({event_code_filter})
-        | table _time host source EventCode Message
-        | sort -_time
-        | head {MAX_EVENTS}
-    """
+    search index=* earliest={TIME_WINDOW}
+    ({event_code_filter})
+    | eval priority=case(
+        EventCode="4625", 1,
+        EventCode="4648", 2,
+        EventCode="4720", 3,
+        EventCode="4726", 4,
+        EventCode="4732", 5,
+        EventCode="4698", 6,
+        EventCode="4688", 7,
+        1=1, 8
+    )
+    | sort priority _time
+    | table _time host source EventCode Message
+    | head {MAX_EVENTS}
+"""
 
     print(f"[*] Querying Splunk for last {TIME_WINDOW} of security events...")
 
