@@ -12,7 +12,7 @@ AI-assisted triage tool that pulls Windows Security events from Splunk and uses 
 Anthropic API to generate SOC triage reports with MITRE ATT&CK mapping.
 
 - **Stack:** Python, Splunk REST API, Anthropic API
-- **Blog post:** [AI-Assisted SOC Triage on Top of Splunk Using the Anthropic API](https://blog.slytech.us)
+- **Blog post:** [AI-Assisted SOC Triage on Top of Splunk Using the Anthropic API](https://blog.slytech.us/splunk-ai-triage/)
 - **Status:** Complete
 
 ### 02 - Autonomous Triage Agent *(coming soon)*
